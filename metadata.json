@@ -1,0 +1,6 @@
+{
+  "name": "TensioBot Pro",
+  "description": "Bitácora inteligente para el registro y seguimiento horario de la tensión arterial, frecuencia cardíaca y niveles de estrés.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}

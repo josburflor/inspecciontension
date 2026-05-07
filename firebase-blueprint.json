@@ -1,0 +1,95 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Public and private information about the user.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "age": {
+          "type": "number"
+        },
+        "gender": {
+          "type": "string",
+          "enum": [
+            "male",
+            "female",
+            "other"
+          ]
+        },
+        "weight": {
+          "type": "number"
+        },
+        "height": {
+          "type": "number"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "uid",
+        "email",
+        "createdAt"
+      ]
+    },
+    "Reading": {
+      "title": "Health Reading",
+      "description": "A single blood pressure and heart rate measurement recorded by the user.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string"
+        },
+        "systolic": {
+          "type": "number"
+        },
+        "diastolic": {
+          "type": "number"
+        },
+        "heartRate": {
+          "type": "number"
+        },
+        "stressLevel": {
+          "type": "number"
+        },
+        "mood": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "userId",
+        "systolic",
+        "diastolic",
+        "heartRate",
+        "timestamp"
+      ]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "User profile data."
+    },
+    "readings/{readingId}": {
+      "schema": "Reading",
+      "description": "Historical health readings."
+    }
+  }
+}
