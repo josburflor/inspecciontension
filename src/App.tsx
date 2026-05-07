@@ -80,7 +80,7 @@ export default function App() {
                className="flex flex-col items-center gap-6"
             >
               <img 
-                src="/hero-login.png" 
+                src="/hero-login.jpg" 
                 alt="TensioBot Hero" 
                 className="w-full max-w-[320px] rounded-3xl shadow-2xl border-4 border-white"
                 onError={(e) => {
