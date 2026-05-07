@@ -18,19 +18,33 @@ export default function App() {
 
   const handleLogin = async () => {
     try {
+      console.log("Starting Google login...");
       await loginWithGoogle();
       toast.success('Sesión iniciada correctamente');
     } catch (error: any) {
-      console.error("Login error:", error);
+      console.error("Login error:", error.code, error.message);
       if (error.code === 'auth/popup-closed-by-user') {
         toast.error('La ventana de inicio de sesión fue cerrada.');
       } else if (error.code === 'auth/popup-blocked') {
-        toast.error('El navegador bloqueó la ventana emergente. Por favor, actívala.');
+        toast.error('El navegador bloqueó la ventana emergente.', {
+          description: 'Por favor, permite las ventanas emergentes o intenta de nuevo.'
+        });
+      } else if (error.code === 'auth/operation-not-allowed') {
+        toast.error('Google Sign-In no está habilitado.', {
+          description: 'Debes habilitar Google en la consola de Firebase.'
+        });
+      } else if (error.code === 'auth/unauthorized-domain') {
+        toast.error('Dominio no autorizado.', {
+          description: 'Añade este dominio a la lista de dominios autorizados en Firebase.'
+        });
       } else {
-        toast.error('Error al iniciar sesión con Google.');
+        toast.error('Error al iniciar sesión con Google.', {
+          description: error.message
+        });
       }
     }
   };
+
 
   if (loading) {
     return (

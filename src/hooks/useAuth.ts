@@ -9,8 +9,18 @@ export function useAuth() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Handle redirect result
+    getRedirectResult(auth).then((result) => {
+      if (result?.user) {
+        console.log("Redirect login successful:", result.user.email);
+      }
+    }).catch((error) => {
+      console.error("Redirect login error:", error);
+    });
+
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       try {
+        console.log("Auth state changed:", firebaseUser?.email || "No user");
         setUser(firebaseUser);
         
         if (firebaseUser) {
@@ -20,13 +30,15 @@ export function useAuth() {
             const userDoc = await getDoc(userDocRef);
             
             if (userDoc.exists()) {
+              console.log("Profile found:", userDoc.data().name);
               setProfile(userDoc.data());
             } else {
+              console.log("Creating new profile for:", firebaseUser.email);
               // Create initial profile
               const newProfile = {
                 uid: firebaseUser.uid,
                 email: firebaseUser.email,
-                name: firebaseUser.displayName || 'User',
+                name: firebaseUser.displayName || 'Usuario',
                 createdAt: serverTimestamp(),
                 age: 30,
                 weight: 70,
@@ -35,11 +47,14 @@ export function useAuth() {
               };
               await setDoc(userDocRef, newProfile);
               setProfile(newProfile);
+              console.log("Profile created successfully");
             }
-          } catch (profileError) {
-            console.error("Error fetching/creating profile:", profileError);
-            // We still have the user object, so we can let them in, 
-            // but the profile data will be missing.
+          } catch (profileError: any) {
+            console.error("Error fetching/creating profile:", profileError.code, profileError.message);
+            // If it's a permission error, maybe the rules are blocking it
+            if (profileError.code === 'permission-denied') {
+              console.warn("Permission denied for Firestore. Check your rules.");
+            }
           }
         } else {
           setProfile(null);
@@ -53,6 +68,7 @@ export function useAuth() {
 
     return () => unsubscribe();
   }, []);
+
 
   return { user, profile, loading };
 }

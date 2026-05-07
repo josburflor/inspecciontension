@@ -64,8 +64,12 @@ export function Layout({ children, activeTab, setActiveTab, user }: LayoutProps)
 
         <div className="pt-8 border-t border-[#D0D0D0]">
           <div className="flex items-center gap-4 px-2 mb-6">
-            <div className="w-12 h-12 rounded-2xl bg-[#0055AA] flex items-center justify-center text-white text-lg font-black uppercase transition-transform hover:scale-110 shadow-md">
-              {user?.displayName?.[0] || user?.email?.[0] || 'U'}
+            <div className="w-12 h-12 rounded-2xl bg-[#0055AA] flex items-center justify-center text-white text-lg font-black uppercase transition-transform hover:scale-110 shadow-md overflow-hidden">
+              {user?.photoURL ? (
+                <img src={user.photoURL} alt="User" className="w-full h-full object-cover" />
+              ) : (
+                user?.displayName?.[0] || user?.email?.[0] || 'U'
+              )}
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-lg font-black truncate text-black">{user?.displayName || 'Usuario'}</p>
@@ -107,8 +111,12 @@ export function Layout({ children, activeTab, setActiveTab, user }: LayoutProps)
           <Heart className="text-[#0055AA] w-8 h-8 fill-[#0055AA]/10" />
           <h1 className="font-black text-2xl text-[#0055AA]">TensioBot</h1>
         </div>
-        <div className="w-10 h-10 rounded-full bg-[#0055AA] flex items-center justify-center text-white text-sm font-black uppercase shadow-md shadow-blue-100">
-          {user?.displayName?.[0] || 'U'}
+        <div className="w-10 h-10 rounded-full bg-[#0055AA] flex items-center justify-center text-white text-sm font-black uppercase shadow-md shadow-blue-100 overflow-hidden">
+          {user?.photoURL ? (
+            <img src={user.photoURL} alt="User" className="w-full h-full object-cover" />
+          ) : (
+            user?.displayName?.[0] || 'U'
+          )}
         </div>
       </header>
 

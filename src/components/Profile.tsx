@@ -55,6 +55,19 @@ export function Profile({ user, profile }: { user: any, profile: any }) {
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-20 h-20 rounded-2xl bg-[#F5F5F5] flex items-center justify-center overflow-hidden border-2 border-white shadow-sm">
+                {user?.photoURL ? (
+                  <img src={user.photoURL} alt="Profile" className="w-full h-full object-cover" />
+                ) : (
+                  <User className="w-10 h-10 text-zinc-300" />
+                )}
+              </div>
+              <div>
+                <h3 className="font-black text-xl">{user?.displayName || 'Usuario'}</h3>
+                <p className="text-sm text-zinc-500">{user?.email}</p>
+              </div>
+            </div>
             <div className="space-y-2">
               <Label htmlFor="name" className="text-[10px] font-bold uppercase text-[#9E9E9E]">Nombre Completo</Label>
               <Input 
@@ -64,6 +77,7 @@ export function Profile({ user, profile }: { user: any, profile: any }) {
                 className="h-12 border-none bg-[#F5F5F5] rounded-xl font-medium"
               />
             </div>
+
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label className="text-[10px] font-bold uppercase text-[#9E9E9E]">Correo Electrónico</Label>
