@@ -77,12 +77,24 @@ export default function App() {
             <motion.div 
                initial={{ scale: 0.5, opacity: 0 }}
                animate={{ scale: 1, opacity: 1 }}
-               className="flex justify-center"
+               className="flex flex-col items-center gap-6"
             >
-              <div className="w-28 h-28 bg-[#0055AA] rounded-[2.5rem] flex items-center justify-center shadow-2xl ring-8 ring-white">
+              <img 
+                src="/hero-login.png" 
+                alt="TensioBot Hero" 
+                className="w-full max-w-[320px] rounded-3xl shadow-2xl border-4 border-white"
+                onError={(e) => {
+                  // Fallback to the heart icon if the image is not found
+                  (e.target as any).style.display = 'none';
+                  const fallback = e.currentTarget.parentElement?.querySelector('.fallback-icon');
+                  if (fallback) (fallback as any).style.display = 'flex';
+                }}
+              />
+              <div className="fallback-icon hidden w-28 h-28 bg-[#0055AA] rounded-[2.5rem] flex items-center justify-center shadow-2xl ring-8 ring-white">
                 <Heart className="text-white w-14 h-14 fill-white/20" />
               </div>
             </motion.div>
+
             
             <motion.div
               initial={{ y: 20, opacity: 0 }}
